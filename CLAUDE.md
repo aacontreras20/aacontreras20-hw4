@@ -30,11 +30,10 @@ select count(*) from county_health_rankings;
 # Install dependencies
 pip install -r requirements.txt
 
-# Run API locally (FastAPI example)
-uvicorn api.main:app --reload
-
-# Run API locally (Flask example)
-python app.py
+# Run API locally
+uvicorn main:app --reload
+# OR use the deployment startup script
+python run.py
 ```
 
 ### Testing
@@ -98,14 +97,19 @@ Returns JSON array of objects with column names matching `county_health_rankings
 - API source files (app.py, api/, etc.)
 
 ### Deployment Platforms
-- **Recommended**: Render (good SQLite support)
-- **Alternative**: Vercel (may need build-time DB creation)
-- Include `data.db` in deployment or create during build process
+- **Recommended**: Railway (excellent PostgreSQL and SQLite support, easy GitHub integration)
+- **Alternative**: Render, Fly.io (good container/SQLite support)
+- Include `data.db` in repository (31MB database included)
+
+### Deployment Files
+- `railway.json` - Railway platform configuration
+- `Procfile` - Process configuration for Railway/Heroku
+- `Dockerfile` - Container deployment configuration
+- `run.py` - Python startup script that handles PORT environment variable properly
+- `start.sh` - Alternative bash startup script
 
 ### Build Process
-Many serverless platforms have ephemeral filesystems. Either:
-1. Include pre-built `data.db` in repository
-2. Run `csv_to_sqlite.py` as build command to create `data.db` from CSVs
+The project includes a pre-built 31MB `data.db` file with 54,553 ZIP codes and 303,864 health records. All deployment configurations use `python run.py` which properly handles the PORT environment variable for different hosting platforms.
 
 ## Testing Checklist
 

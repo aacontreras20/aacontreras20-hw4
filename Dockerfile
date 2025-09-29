@@ -13,4 +13,4 @@ COPY . .
 EXPOSE 8000
 
 # Start command that uses PORT environment variable
-CMD python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
+CMD ["python", "run.py"]
