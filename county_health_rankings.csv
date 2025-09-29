@@ -1,0 +1,6 @@
+state,county,state_code,county_code,year_span,measure_name,measure_id,numerator,denominator,raw_value,confidence_interval_lower_bound,confidence_interval_upper_bound,data_release_year,fipscode
+MA,Middlesex County,25,017,2020-2022,Adult obesity,11,60771.02,263078,0.23,0.22,0.24,2023,25017
+MA,Middlesex County,25,017,2020-2022,Violent crime rate,43,850,263078,3.2,3.0,3.4,2023,25017
+NY,New York County,36,061,2020-2022,Adult obesity,11,45000,180000,0.25,0.24,0.26,2023,36061
+CA,Los Angeles County,06,037,2020-2022,Adult obesity,11,2500000,10000000,0.25,0.24,0.26,2023,06037
+FL,Miami-Dade County,12,086,2020-2022,Unemployment,23,120000,2800000,4.3,4.1,4.5,2023,12086

@@ -1,0 +1,6 @@
+zip,default_state,county,county_state,state_abbreviation,county_code,zip_pop,zip_pop_in_county,n_counties,default_city
+02138,MA,Middlesex County,MA,MA,017,29000,29000,1,Cambridge
+02139,MA,Middlesex County,MA,MA,017,15000,15000,1,Cambridge
+10001,NY,New York County,NY,NY,061,21000,21000,1,New York
+90210,CA,Los Angeles County,CA,CA,037,25000,25000,1,Beverly Hills
+33101,FL,Miami-Dade County,FL,FL,086,8000,8000,1,Miami Beach
