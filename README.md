@@ -24,7 +24,7 @@ pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 
-The API will be available at http://localhost:8000
+The API will be available at https://aacontreras20-hw4.vercel.app/
 
 ## Example curl requests
 
