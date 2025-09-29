@@ -13,6 +13,8 @@ from typing import Optional
 import sqlite3
 import re
 import os
+import csv
+import tempfile
 
 app = FastAPI()
 
@@ -183,6 +185,6 @@ async def get_county_data(request: CountyDataRequest):
             conn.close()
 
 # For Vercel serverless functions
-def handler(request, response):
-    """Vercel handler"""
-    return app(request, response)
+from mangum import Mangum
+
+handler = Mangum(app)

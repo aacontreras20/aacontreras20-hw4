@@ -16,6 +16,6 @@ async def root():
     return {"message": "County Health Data API is running"}
 
 # For Vercel serverless functions
-def handler(request, response):
-    """Vercel handler"""
-    return app(request, response)
+from mangum import Mangum
+
+handler = Mangum(app)
