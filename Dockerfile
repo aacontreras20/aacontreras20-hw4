@@ -9,8 +9,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code and database
 COPY . .
 
-# Expose port
+# Expose port (default 8000, but can be overridden)
 EXPOSE 8000
 
-# Start command
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Start command that uses PORT environment variable
+CMD python -m uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
