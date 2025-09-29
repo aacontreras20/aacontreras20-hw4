@@ -1,6 +1,6 @@
 """
-County Health Data API
-FastAPI application that exposes county health rankings data via HTTP POST endpoint.
+County Health Data API endpoint
+Vercel serverless function implementation.
 
 This implementation was created with assistance from Claude AI (Anthropic).
 """
@@ -9,12 +9,12 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Any
+from typing import Optional
 import sqlite3
 import re
 import os
 
-app = FastAPI(title="County Health Data API", version="1.0.0")
+app = FastAPI()
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
@@ -59,19 +59,29 @@ class CountyDataRequest(BaseModel):
 
 def get_db_connection():
     """Get SQLite database connection"""
-    db_path = "data.db"
-    if not os.path.exists(db_path):
-        raise HTTPException(
-            status_code=500,
-            detail="Database not found. Please ensure data.db exists."
-        )
-    return sqlite3.connect(db_path)
+    # For Vercel, try to find the database file
+    possible_paths = [
+        "data.db",
+        "../data.db",
+        "/tmp/data.db",
+        os.path.join(os.path.dirname(__file__), "..", "data.db"),
+        os.path.join(os.path.dirname(__file__), "data.db")
+    ]
+
+    for db_path in possible_paths:
+        if os.path.exists(db_path):
+            return sqlite3.connect(db_path)
+
+    raise HTTPException(
+        status_code=500,
+        detail="Database not found. Please ensure data.db exists."
+    )
 
 def validate_zip_code(zip_code: str) -> bool:
     """Validate ZIP code is exactly 5 digits"""
     return bool(re.match(r'^\d{5}$', zip_code))
 
-@app.post("/county_data")
+@app.post("/")
 async def get_county_data(request: CountyDataRequest):
     """
     Get county health data by ZIP code and measure name.
@@ -172,11 +182,7 @@ async def get_county_data(request: CountyDataRequest):
         if 'conn' in locals():
             conn.close()
 
-@app.get("/")
-async def root():
-    """Health check endpoint"""
-    return {"message": "County Health Data API is running"}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# For Vercel serverless functions
+def handler(request, response):
+    """Vercel handler"""
+    return app(request, response)

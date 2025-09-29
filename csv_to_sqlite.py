@@ -36,11 +36,15 @@ def main():
 
         # Read CSV and get headers
         with open(csv_path, 'r', newline='', encoding='utf-8') as csvfile:
-            # Detect delimiter and read headers
-            sample = csvfile.read(1024)
-            csvfile.seek(0)
-            sniffer = csv.Sniffer()
-            delimiter = sniffer.sniff(sample).delimiter
+            # Try to detect delimiter, fallback to comma
+            try:
+                sample = csvfile.read(1024)
+                csvfile.seek(0)
+                sniffer = csv.Sniffer()
+                delimiter = sniffer.sniff(sample).delimiter
+            except csv.Error:
+                delimiter = ','
+                csvfile.seek(0)
 
             reader = csv.reader(csvfile, delimiter=delimiter)
             headers = next(reader)
