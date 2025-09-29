@@ -22,7 +22,7 @@ wheels/
 MANIFEST
 
 # Database
-data.db
+# data.db - commenting out for production deployment
 
 # Environment variables
 .env
